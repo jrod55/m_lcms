@@ -118,3 +118,9 @@ fwrite(dat_corrected, file = "02_signalDrift_corrected_peak_area_matrix.txt", co
 fwrite(dat_criteria, file = "../out/criteria_table_02_signalDrift_corrected_peak_area_matrix.txt", col.names = TRUE, sep = "\t", quote = FALSE, na = NA)
 
 print(paste0("Done with signal drift correction"))
+
+# convert ../out/*.png -resize 1200x750 ../out/00_maize_phenolic_compounds.pdf
+
+
+
+

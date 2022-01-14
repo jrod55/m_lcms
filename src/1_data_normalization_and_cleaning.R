@@ -92,7 +92,15 @@ lod_prop = dm_write %>%
   mutate(N_missing = round(N_missing, 2),
          NB_missing = round(NB_missing, 2),
          NsubB_missing = round(NsubB_missing, 2))
+
+## Make wide table with LOD thresholds by sub-batch
+lod_prop_wide = lod_prop %>%
+  mutate(LOD = round(LOD, 3)) %>%
+  pivot_wider(!c(batch, area_blank, N, N_missing, NB, NB_missing, NsubB, NsubB_missing), names_from = sub_batch, values_from = LOD)
+
 fwrite(lod_prop, "../out/lod_and_missing_data.txt", sep = "\t")
+# fwrite(lod_prop_wide, "../out/lod_wide.txt", sep = "\t")
+
 
 ## Compounds with more than 25% missing data in any given batch, set all values for them to NA
 all_comps = unique(dout$compound)
@@ -143,4 +151,3 @@ drm = pw_out[[3]]
 fwrite(m1, file = "01_pw_outlier_norm_peak_area_matrix.txt", col.names = TRUE, sep = "\t", quote = FALSE, na = NA)
 fwrite(drm, file = "../out/data_removed_00_raw_peak_area_matrix.txt", col.names = TRUE, sep = "\t", quote = FALSE, na = NA)
 print(paste0("Done with data normalization and cleaning"))
-
